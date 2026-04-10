@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const API = "http://localhost:10000";
+const API = window.location.origin;
 
 export default function Control() {
   const [formData, setFormData] = useState({
@@ -83,7 +83,11 @@ export default function Control() {
 
           <div>
             <label>Trạng thái chương trình</label>
-            <select name="program_state" value={formData.program_state} onChange={handleChange}>
+            <select
+              name="program_state"
+              value={formData.program_state}
+              onChange={handleChange}
+            >
               <option value="off">Tắt</option>
               <option value="on">Bật</option>
             </select>
@@ -99,7 +103,11 @@ export default function Control() {
 
           <div>
             <label>Điện trở đốt</label>
-            <select name="heater" value={formData.heater} onChange={handleChange}>
+            <select
+              name="heater"
+              value={formData.heater}
+              onChange={handleChange}
+            >
               <option value="off">Tắt</option>
               <option value="on">Bật</option>
             </select>
