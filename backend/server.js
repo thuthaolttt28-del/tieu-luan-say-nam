@@ -294,7 +294,8 @@ initDb()
   .then(() => {
     app.listen(PORT, "0.0.0.0", () => {
       console.log(`Server dang chay tai cong ${PORT}`);
-      console.log(`Mo web tai: http://localhost:${PORT}`);
+      console.log(`Server dang chay tai cong ${PORT}`);
+      console.log("Render service is live");
     });
   })
   .catch((error) => {

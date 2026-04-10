@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import {
   LineChart,
@@ -13,47 +13,57 @@ import {
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 
-const API = "http://localhost:10000";
+const API = window.location.origin;
 
 export default function Dashboard() {
   const [deviceState, setDeviceState] = useState(null);
   const [telemetry, setTelemetry] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [lastUpdated, setLastUpdated] = useState("");
 
-  const fetchAllData = async () => {
+  const fetchAllData = useCallback(async () => {
     try {
-      setError("");
+      const now = Date.now();
 
       const [stateRes, telemetryRes] = await Promise.all([
-        axios.get(`${API}/api/state`),
-        axios.get(`${API}/api/telemetry`),
+        axios.get(`${API}/api/state`, {
+          params: { t: now },
+          headers: {
+            "Cache-Control": "no-cache",
+            Pragma: "no-cache",
+          },
+        }),
+        axios.get(`${API}/api/telemetry`, {
+          params: { t: now },
+          headers: {
+            "Cache-Control": "no-cache",
+            Pragma: "no-cache",
+          },
+        }),
       ]);
 
       setDeviceState(stateRes.data);
-      setTelemetry(telemetryRes.data);
+      setTelemetry(Array.isArray(telemetryRes.data) ? telemetryRes.data : []);
+      setLastUpdated(new Date().toLocaleString());
+      setError("");
     } catch (err) {
-      console.error(err);
-      setError("Không lấy được dữ liệu từ backend");
+      console.error("Loi fetch dashboard:", err);
+      setError("Không lấy được dữ liệu từ server");
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchAllData();
-    const timer = setInterval(fetchAllData, 3000);
-    return () => clearInterval(timer);
-  }, []);
 
-  const chartData = telemetry.map((item) => ({
-    id: item.id,
-    time: new Date(item.created_at).toLocaleTimeString(),
-    fullTime: new Date(item.created_at).toLocaleString(),
-    temperature: item.temperature,
-    weight: item.weight,
-    source_action: item.source_action,
-  }));
+    const timer = setInterval(() => {
+      fetchAllData();
+    }, 2000);
+
+    return () => clearInterval(timer);
+  }, [fetchAllData]);
 
   const exportExcel = () => {
     const excelData = telemetry.map((item) => ({
@@ -95,8 +105,8 @@ export default function Dashboard() {
   };
 
   const clearData = async () => {
-    const confirmDelete = window.confirm("Bạn có chắc muốn xóa toàn bộ dữ liệu không?");
-    if (!confirmDelete) return;
+    const ok = window.confirm("Bạn có chắc muốn xóa toàn bộ dữ liệu không?");
+    if (!ok) return;
 
     try {
       await axios.delete(`${API}/api/telemetry`);
@@ -108,9 +118,15 @@ export default function Dashboard() {
     }
   };
 
+  const chartData = telemetry.map((item) => ({
+    time: new Date(item.created_at).toLocaleTimeString(),
+    temperature: item.temperature,
+    weight: item.weight,
+  }));
+
   if (loading) {
     return (
-      <div style={{ padding: 20 }}>
+      <div className="card">
         <h2>Trang giám sát</h2>
         <p>Đang tải dữ liệu...</p>
       </div>
@@ -119,87 +135,105 @@ export default function Dashboard() {
 
   if (error) {
     return (
-      <div style={{ padding: 20 }}>
+      <div className="card">
         <h2>Trang giám sát</h2>
         <p>{error}</p>
+        <button onClick={fetchAllData}>Thử tải lại</button>
       </div>
     );
   }
 
   return (
-    <div style={{ padding: 20 }}>
-      <h2>Trang giám sát</h2>
+    <div>
+      <div className="card">
+        <h2>Trang giám sát</h2>
 
-      <div style={{ display: "grid", gap: 10, maxWidth: 500, marginBottom: 30 }}>
-        <div><strong>Chế độ:</strong> {deviceState?.mode}</div>
-        <div><strong>Chương trình:</strong> {deviceState?.program_state}</div>
-        <div><strong>Quạt:</strong> {deviceState?.fan}</div>
-        <div><strong>Điện trở:</strong> {deviceState?.heater}</div>
-        <div><strong>Nhiệt độ đặt:</strong> {deviceState?.heater_temp} °C</div>
-        <div><strong>Thời gian sấy:</strong> {deviceState?.dry_time} phút</div>
-        <div><strong>Trạng thái tủ:</strong> {deviceState?.cabinet_status}</div>
+        <p>
+          <strong>Cập nhật lần cuối:</strong>{" "}
+          {lastUpdated || "Chưa có"}
+        </p>
+
+        <div style={{ marginTop: 12, marginBottom: 20 }}>
+          <button onClick={fetchAllData}>Làm mới dữ liệu</button>
+        </div>
+
+        <div className="grid">
+          <p><strong>Chế độ:</strong> {deviceState?.mode}</p>
+          <p><strong>Chương trình:</strong> {deviceState?.program_state}</p>
+          <p><strong>Quạt:</strong> {deviceState?.fan}</p>
+          <p><strong>Điện trở:</strong> {deviceState?.heater}</p>
+          <p><strong>Nhiệt độ đặt:</strong> {deviceState?.heater_temp} °C</p>
+          <p><strong>Thời gian sấy:</strong> {deviceState?.dry_time} phút</p>
+          <p><strong>Trạng thái tủ:</strong> {deviceState?.cabinet_status}</p>
+        </div>
       </div>
 
-      <div style={{ display: "flex", gap: 10, marginBottom: 20 }}>
-        <button onClick={exportExcel}>Xuất Excel</button>
-        <button onClick={exportTxt}>Xuất TXT</button>
-        <button onClick={clearData}>Xóa dữ liệu</button>
+      <div className="card">
+        <div className="action-row">
+          <button onClick={exportExcel}>Xuất Excel</button>
+          <button onClick={exportTxt}>Xuất TXT</button>
+          <button onClick={clearData}>Xóa dữ liệu</button>
+        </div>
+
+        <h3>Đồ thị nhiệt độ</h3>
+        <div className="chart-box">
+          <ResponsiveContainer>
+            <LineChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="time" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="temperature" name="Nhiệt độ" />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+
+        <h3>Đồ thị khối lượng</h3>
+        <div className="chart-box">
+          <ResponsiveContainer>
+            <LineChart data={chartData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="time" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="weight" name="Khối lượng" />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
       </div>
 
-      <h3>Đồ thị nhiệt độ</h3>
-      <div style={{ width: "100%", height: 300, marginBottom: 40 }}>
-        <ResponsiveContainer>
-          <LineChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="temperature" name="Nhiệt độ" />
-          </LineChart>
-        </ResponsiveContainer>
+      <div className="card">
+        <h3>Dữ liệu cảm biến</h3>
+
+        {telemetry.length === 0 ? (
+          <p>Chưa có dữ liệu telemetry.</p>
+        ) : (
+          <div className="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Thời gian</th>
+                  <th>Nhiệt độ</th>
+                  <th>Khối lượng</th>
+                  <th>Loại dữ liệu</th>
+                </tr>
+              </thead>
+              <tbody>
+                {telemetry.map((item) => (
+                  <tr key={item.id}>
+                    <td>{new Date(item.created_at).toLocaleString()}</td>
+                    <td>{item.temperature ?? ""}</td>
+                    <td>{item.weight ?? ""}</td>
+                    <td>{item.source_action ?? ""}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
-
-      <h3>Đồ thị khối lượng</h3>
-      <div style={{ width: "100%", height: 300, marginBottom: 40 }}>
-        <ResponsiveContainer>
-          <LineChart data={chartData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="time" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="weight" name="Khối lượng" />
-          </LineChart>
-        </ResponsiveContainer>
-      </div>
-
-      <h3>Dữ liệu cảm biến</h3>
-
-      {telemetry.length === 0 ? (
-        <p>Chưa có dữ liệu telemetry.</p>
-      ) : (
-        <table border="1" cellPadding="8" style={{ borderCollapse: "collapse", width: "100%" }}>
-          <thead>
-            <tr>
-              <th>Thời gian</th>
-              <th>Nhiệt độ</th>
-              <th>Khối lượng</th>
-              <th>Loại dữ liệu</th>
-            </tr>
-          </thead>
-          <tbody>
-            {telemetry.map((item) => (
-              <tr key={item.id}>
-                <td>{new Date(item.created_at).toLocaleString()}</td>
-                <td>{item.temperature ?? ""}</td>
-                <td>{item.weight ?? ""}</td>
-                <td>{item.source_action ?? ""}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
     </div>
   );
 }

@@ -14,11 +14,15 @@ export default function Control() {
   });
 
   const [message, setMessage] = useState("");
+  const [debugResponse, setDebugResponse] = useState(null);
+  const [latestState, setLatestState] = useState(null);
 
   const fetchState = async () => {
     try {
       const res = await axios.get(`${API}/api/state`);
       const d = res.data;
+
+      setLatestState(d);
 
       setFormData({
         mode: d.mode || "auto",
@@ -47,8 +51,14 @@ export default function Control() {
 
   const handleSubmit = async () => {
     try {
-      await axios.put(`${API}/api/control`, {
-        ...formData,
+      setMessage("");
+      setDebugResponse(null);
+
+      const payload = {
+        mode: formData.mode,
+        program_state: formData.program_state,
+        fan: formData.fan,
+        heater: formData.heater,
         heater_temp: Number(formData.heater_temp),
         dry_time: Number(formData.dry_time_hours) * 60,
         cabinet_status:
@@ -57,13 +67,22 @@ export default function Control() {
               ? "AUTO_DANG_CHAY"
               : "MANUAL_DANG_CHAY"
             : "TAT",
-      });
+      };
 
+      const res = await axios.put(`${API}/api/control`, payload);
+
+      setDebugResponse(res.data);
       setMessage("Đã gửi lệnh thành công");
-      fetchState();
+
+      const stateRes = await axios.get(`${API}/api/state`);
+      setLatestState(stateRes.data);
     } catch (error) {
       console.error(error);
       setMessage("Gửi lệnh thất bại");
+      setDebugResponse({
+        error: true,
+        detail: error?.message || "Loi khong ro",
+      });
     }
   };
 
@@ -71,6 +90,8 @@ export default function Control() {
     <div>
       <div className="card">
         <h2>Trang điều khiển</h2>
+
+        <p><strong>API đang dùng:</strong> {API}</p>
 
         <div className="grid">
           <div>
@@ -146,17 +167,17 @@ export default function Control() {
       </div>
 
       <div className="card">
-        <h3>Trạng thái hiện tại</h3>
+        <h3>State mới nhất từ server</h3>
+        <pre style={{ whiteSpace: "pre-wrap" }}>
+          {JSON.stringify(latestState, null, 2)}
+        </pre>
+      </div>
 
-        <div className={`status ${formData.program_state === "on" ? "running" : "stopped"}`}>
-          {formData.program_state === "on" ? "ĐANG CHẠY" : "ĐANG TẮT"}
-        </div>
-
-        <p><strong>Mode:</strong> {formData.mode}</p>
-        <p><strong>Fan:</strong> {formData.fan}</p>
-        <p><strong>Heater:</strong> {formData.heater}</p>
-        <p><strong>Nhiệt độ đặt:</strong> {formData.heater_temp} °C</p>
-        <p><strong>Thời gian sấy:</strong> {formData.dry_time_hours} giờ</p>
+      <div className="card">
+        <h3>Phản hồi PUT /api/control</h3>
+        <pre style={{ whiteSpace: "pre-wrap" }}>
+          {JSON.stringify(debugResponse, null, 2)}
+        </pre>
       </div>
     </div>
   );
