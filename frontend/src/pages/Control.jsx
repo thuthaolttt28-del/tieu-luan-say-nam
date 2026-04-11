@@ -14,15 +14,14 @@ export default function Control() {
   });
 
   const [message, setMessage] = useState("");
-  const [debugResponse, setDebugResponse] = useState(null);
-  const [latestState, setLatestState] = useState(null);
 
   const fetchState = async () => {
     try {
-      const res = await axios.get(`${API}/api/state`);
-      const d = res.data;
+      const res = await axios.get(`${API}/api/state`, {
+        params: { t: Date.now() },
+      });
 
-      setLatestState(d);
+      const d = res.data;
 
       setFormData({
         mode: d.mode || "auto",
@@ -51,14 +50,8 @@ export default function Control() {
 
   const handleSubmit = async () => {
     try {
-      setMessage("");
-      setDebugResponse(null);
-
-      const payload = {
-        mode: formData.mode,
-        program_state: formData.program_state,
-        fan: formData.fan,
-        heater: formData.heater,
+      await axios.put(`${API}/api/control`, {
+        ...formData,
         heater_temp: Number(formData.heater_temp),
         dry_time: Number(formData.dry_time_hours) * 60,
         cabinet_status:
@@ -67,31 +60,20 @@ export default function Control() {
               ? "AUTO_DANG_CHAY"
               : "MANUAL_DANG_CHAY"
             : "TAT",
-      };
+      });
 
-      const res = await axios.put(`${API}/api/control`, payload);
-
-      setDebugResponse(res.data);
       setMessage("Đã gửi lệnh thành công");
-
-      const stateRes = await axios.get(`${API}/api/state`);
-      setLatestState(stateRes.data);
+      fetchState();
     } catch (error) {
       console.error(error);
       setMessage("Gửi lệnh thất bại");
-      setDebugResponse({
-        error: true,
-        detail: error?.message || "Loi khong ro",
-      });
     }
   };
 
   return (
     <div>
       <div className="card">
-        <h2>Trang điều khiển</h2>
-
-        <p><strong>API đang dùng:</strong> {API}</p>
+        <h2 className="section-title">Trang điều khiển</h2>
 
         <div className="grid">
           <div>
@@ -167,17 +149,19 @@ export default function Control() {
       </div>
 
       <div className="card">
-        <h3>State mới nhất từ server</h3>
-        <pre style={{ whiteSpace: "pre-wrap" }}>
-          {JSON.stringify(latestState, null, 2)}
-        </pre>
-      </div>
+        <h3 className="section-title">Trạng thái hiện tại</h3>
 
-      <div className="card">
-        <h3>Phản hồi PUT /api/control</h3>
-        <pre style={{ whiteSpace: "pre-wrap" }}>
-          {JSON.stringify(debugResponse, null, 2)}
-        </pre>
+        <div className={`status ${formData.program_state === "on" ? "running" : "stopped"}`}>
+          {formData.program_state === "on" ? "ĐANG CHẠY" : "ĐANG TẮT"}
+        </div>
+
+        <div className="info-grid">
+          <div className="info-item"><strong>Mode:</strong> {formData.mode}</div>
+          <div className="info-item"><strong>Quạt:</strong> {formData.fan}</div>
+          <div className="info-item"><strong>Điện trở:</strong> {formData.heater}</div>
+          <div className="info-item"><strong>Nhiệt độ đặt:</strong> {formData.heater_temp} °C</div>
+          <div className="info-item"><strong>Thời gian sấy:</strong> {formData.dry_time_hours} giờ</div>
+        </div>
       </div>
     </div>
   );

@@ -1,95 +1,140 @@
 body {
   font-family: Arial, sans-serif;
-  background: #f4f6f8;
+  background: linear-gradient(180deg, #eef8ef 0%, #f7f2e8 100%);
   margin: 0;
-  color: #222;
+  color: #1f2937;
 }
 
 .container {
-  max-width: 1100px;
+  max-width: 1180px;
   margin: auto;
-  padding: 20px;
+  padding: 24px;
 }
 
 .title {
   text-align: center;
-  font-size: 32px;
-  margin-bottom: 20px;
-  color: #1f2937;
+  font-size: 34px;
+  margin-bottom: 10px;
+  color: #1b5e20;
+}
+
+.subtitle {
+  text-align: center;
+  font-size: 16px;
+  color: #4b5563;
+  margin-bottom: 24px;
+}
+
+.student-box {
+  background: #ffffff;
+  border-left: 6px solid #2e7d32;
+  border-radius: 14px;
+  padding: 16px 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  margin-bottom: 22px;
+}
+
+.student-box p {
+  margin: 8px 0;
+  font-size: 16px;
 }
 
 .card {
-  background: white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 22px;
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  margin-bottom: 22px;
+}
+
+.section-title {
+  margin-top: 0;
+  margin-bottom: 18px;
+  color: #1b5e20;
+  font-size: 22px;
 }
 
 .grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 15px;
+  gap: 18px;
 }
 
 label {
-  font-weight: bold;
+  font-weight: 700;
+  color: #2f3e2f;
 }
 
 select,
 input {
   width: 100%;
-  padding: 10px;
-  margin-top: 6px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
+  padding: 12px 14px;
+  margin-top: 8px;
+  border-radius: 12px;
+  border: 1px solid #cdd7c8;
   box-sizing: border-box;
+  font-size: 15px;
+  background: #fcfffb;
 }
 
 button {
-  padding: 12px 18px;
+  padding: 12px 20px;
   border: none;
-  border-radius: 8px;
-  background: #007bff;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #2e7d32, #43a047);
   color: white;
-  font-size: 15px;
+  font-size: 16px;
+  font-weight: 700;
   cursor: pointer;
+  box-shadow: 0 6px 14px rgba(46, 125, 50, 0.22);
 }
 
 button:hover {
-  background: #0056b3;
+  opacity: 0.95;
 }
 
 .status {
-  padding: 12px;
-  border-radius: 8px;
+  padding: 14px;
+  border-radius: 12px;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
+  font-size: 18px;
 }
 
 .running {
-  background: #d4edda;
-  color: #155724;
+  background: #dff3e2;
+  color: #1b5e20;
 }
 
 .stopped {
-  background: #f8d7da;
-  color: #721c24;
+  background: #fde2e2;
+  color: #b42318;
 }
 
 .nav {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: 12px;
+  margin-bottom: 24px;
 }
 
 .nav button {
-  background: #6c757d;
+  background: linear-gradient(90deg, #607d8b, #78909c);
+  box-shadow: none;
 }
 
-.nav button:hover {
-  background: #343a40;
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+
+.info-item {
+  background: #f7fbf6;
+  border: 1px solid #d7e7d2;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 17px;
 }
 
 .chart-box {
@@ -112,25 +157,47 @@ table {
   width: 100%;
   border-collapse: collapse;
   background: white;
+  border-radius: 10px;
+  overflow: hidden;
 }
 
 th,
 td {
-  border: 1px solid #ddd;
-  padding: 8px;
+  border: 1px solid #e5e7eb;
+  padding: 10px;
   text-align: center;
 }
 
 th {
-  background: #f1f5f9;
+  background: #edf7ed;
+  color: #1b5e20;
 }
 
 .message-ok {
-  color: #155724;
+  color: #1b5e20;
   font-weight: bold;
+  font-size: 16px;
 }
 
 .message-error {
-  color: #b91c1c;
+  color: #b42318;
   font-weight: bold;
+  font-size: 16px;
+}
+
+.refresh-text {
+  font-size: 14px;
+  color: #4b5563;
+  margin-bottom: 16px;
+}
+
+@media (max-width: 900px) {
+  .grid,
+  .info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .title {
+    font-size: 28px;
+  }
 }
