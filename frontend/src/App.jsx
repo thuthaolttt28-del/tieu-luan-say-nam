@@ -9,8 +9,8 @@ export default function App() {
       <p className="subtitle">Chủ đề: Nông nghiệp thông minh - Smart Agriculture</p>
 
       <div className="student-box">
-        <p><strong>Sinh viên:</strong> TEN_SINH_VIEN</p>
-        <p><strong>Mã số sinh viên:</strong> MSSV_CUA_BAN</p>
+        <p><strong>Sinh viên:</strong> Nguyễn Đức Huy</p>
+        <p><strong>Mã số sinh viên:</strong> 22138038</p>
       </div>
 
       <div className="nav">
