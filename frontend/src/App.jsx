@@ -13,9 +13,11 @@ export default function App() {
         <Link to="/">
           <button>Trang chủ</button>
         </Link>
+
         <Link to="/dashboard">
           <button>Giám sát</button>
         </Link>
+
         <Link to="/control">
           <button>Điều khiển</button>
         </Link>
