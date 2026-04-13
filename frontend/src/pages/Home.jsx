@@ -50,7 +50,7 @@ export default function Home() {
         <h3 className="section-title">Phương thức liên lạc</h3>
         <div className="info-grid">
           <div className="info-item">
-            <strong></strong> nguyenduchuy23022004@gmail.com
+            <strong>Gmail: </strong> nguyenduchuy23022004@gmail.com
           </div>
           <div className="info-item">
             <strong>Facebook:</strong> https://www.facebook.com/share/1G7wbduQN7/?mibextid=wwXIfr
