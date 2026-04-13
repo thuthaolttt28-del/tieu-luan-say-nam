@@ -9,7 +9,7 @@ export default function Control() {
     program_state: "off",
     fan: "off",
     heater: "off",
-    heater_temp: 45,
+    heater_temp: 65,
     dry_time_hours: 0,
   });
 

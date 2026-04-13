@@ -201,3 +201,46 @@ th {
     font-size: 28px;
   }
 }
+.home-page {
+  padding: 28px;
+}
+
+.home-header {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+
+.home-logo {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+  background: white;
+  border-radius: 16px;
+  padding: 10px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.home-school {
+  margin: 0;
+  color: #1b5e20;
+  font-size: 28px;
+}
+
+.home-faculty {
+  margin-top: 8px;
+  color: #556;
+  font-size: 16px;
+}
+
+.home-section {
+  margin-bottom: 24px;
+}
+
+.home-text {
+  font-size: 17px;
+  line-height: 1.7;
+  color: #2f3e2f;
+}

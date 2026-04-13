@@ -66,11 +66,11 @@ export default function Dashboard() {
   }, [fetchAllData]);
 
   const exportExcel = () => {
-    const excelData = telemetry.map((item) => ({
+    const excelData = telemetry.map((item, index) => ({
+      STT: index + 1,
       "Thời gian": new Date(item.created_at).toLocaleString(),
       "Nhiệt độ": item.temperature,
       "Khối lượng": item.weight,
-      "Loại dữ liệu": item.source_action,
     }));
 
     const worksheet = XLSX.utils.json_to_sheet(excelData);
@@ -92,8 +92,8 @@ export default function Dashboard() {
   const exportTxt = () => {
     const txtData = telemetry
       .map(
-        (item) =>
-          `Thoi gian: ${new Date(item.created_at).toLocaleString()} | Nhiet do: ${item.temperature} | Khoi luong: ${item.weight} | Loai du lieu: ${item.source_action}`
+        (item, index) =>
+          `STT: ${index + 1} | Thoi gian: ${new Date(item.created_at).toLocaleString()} | Nhiet do: ${item.temperature} | Khoi luong: ${item.weight}`
       )
       .join("\n");
 
@@ -213,19 +213,19 @@ export default function Dashboard() {
             <table>
               <thead>
                 <tr>
+                  <th>STT</th>
                   <th>Thời gian</th>
                   <th>Nhiệt độ</th>
                   <th>Khối lượng</th>
-                  <th>Loại dữ liệu</th>
                 </tr>
               </thead>
               <tbody>
-                {telemetry.map((item) => (
+                {telemetry.map((item, index) => (
                   <tr key={item.id}>
+                    <td>{index + 1}</td>
                     <td>{new Date(item.created_at).toLocaleString()}</td>
                     <td>{item.temperature ?? ""}</td>
                     <td>{item.weight ?? ""}</td>
-                    <td>{item.source_action ?? ""}</td>
                   </tr>
                 ))}
               </tbody>
