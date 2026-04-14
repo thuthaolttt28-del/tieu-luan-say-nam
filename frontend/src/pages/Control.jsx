@@ -9,7 +9,7 @@ export default function Control() {
     program_state: "off",
     fan: "off",
     heater: "off",
-    heater_temp: 45,
+    heater_temp: 60,
     dry_time_hours: 0,
   });
 
@@ -28,7 +28,7 @@ export default function Control() {
         program_state: d.program_state || "off",
         fan: d.fan || "off",
         heater: d.heater || "off",
-        heater_temp: d.heater_temp ?? 45,
+        heater_temp: d.heater_temp ?? 60,
         dry_time_hours: d.dry_time ? d.dry_time / 60 : 0,
       });
     } catch (error) {
