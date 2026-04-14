@@ -15,9 +15,10 @@ export default function Home() {
       </div>
 
       <div className="home-section">
-        <h3 className="section-title">Tên đồ án</h3>
+        <h3 className="section-title">Tên đề tài</h3>
         <p className="home-text">
-          HỆ THỐNG GIÁM SÁT VÀ ĐIỀU KHIỂN TỦ SẤY NẤM THÔNG MINH
+          Điều khiền và giám sát trọng lượng mẫu sấy trên mô hình sấy thí nghiệm.
+
         </p>
       </div>
 

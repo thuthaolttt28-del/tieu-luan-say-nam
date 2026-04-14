@@ -1,7 +1,6 @@
 import { Routes, Route, Link, Navigate } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Control from "./pages/Control";
-import Home from "./pages/Home";
 
 export default function App() {
   return (
@@ -9,25 +8,24 @@ export default function App() {
       <h1 className="title">HỆ THỐNG GIÁM SÁT VÀ ĐIỀU KHIỂN TỦ SẤY NẤM</h1>
       <p className="subtitle">Chủ đề: Nông nghiệp thông minh - Smart Agriculture</p>
 
-      <div className="nav">
-        <Link to="/">
-          <button>Trang chủ</button>
-        </Link>
+      <div className="student-box">
+        <p><strong>Sinh viên:</strong> Nguyễn ĐỨc Huy</p>
+        <p><strong>Mã số sinh viên:</strong> 22138038</p>
+      </div>
 
+      <div className="nav">
         <Link to="/dashboard">
           <button>Giám sát</button>
         </Link>
-
         <Link to="/control">
           <button>Điều khiển</button>
         </Link>
       </div>
 
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/control" element={<Control />} />
-        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </div>
   );
