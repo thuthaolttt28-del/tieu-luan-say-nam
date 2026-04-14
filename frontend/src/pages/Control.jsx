@@ -142,7 +142,11 @@ export default function Control() {
         </div>
 
         {message && (
-          <p className={message.includes("thất bại") ? "message-error" : "message-ok"}>
+          <p
+            className={
+              message.includes("thất bại") ? "message-error" : "message-ok"
+            }
+          >
             {message}
           </p>
         )}
@@ -151,16 +155,30 @@ export default function Control() {
       <div className="card">
         <h3 className="section-title">Trạng thái hiện tại</h3>
 
-        <div className={`status ${formData.program_state === "on" ? "running" : "stopped"}`}>
+        <div
+          className={`status ${
+            formData.program_state === "on" ? "running" : "stopped"
+          }`}
+        >
           {formData.program_state === "on" ? "ĐANG CHẠY" : "ĐANG TẮT"}
         </div>
 
         <div className="info-grid">
-          <div className="info-item"><strong>Mode:</strong> {formData.mode}</div>
-          <div className="info-item"><strong>Quạt:</strong> {formData.fan}</div>
-          <div className="info-item"><strong>Điện trở:</strong> {formData.heater}</div>
-          <div className="info-item"><strong>Nhiệt độ đặt:</strong> {formData.heater_temp} °C</div>
-          <div className="info-item"><strong>Thời gian sấy:</strong> {formData.dry_time_hours} giờ</div>
+          <div className="info-item">
+            <strong>Mode:</strong> {formData.mode}
+          </div>
+          <div className="info-item">
+            <strong>Quạt:</strong> {formData.fan}
+          </div>
+          <div className="info-item">
+            <strong>Điện trở:</strong> {formData.heater}
+          </div>
+          <div className="info-item">
+            <strong>Nhiệt độ đặt:</strong> {formData.heater_temp} °C
+          </div>
+          <div className="info-item">
+            <strong>Thời gian sấy:</strong> {formData.dry_time_hours} giờ
+          </div>
         </div>
       </div>
     </div>

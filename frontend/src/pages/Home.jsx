@@ -10,15 +10,16 @@ export default function Home() {
 
         <div>
           <h2 className="home-school">TRƯỜNG ĐẠI HỌC NÔNG LÂM TP.HCM</h2>
-          <p className="home-faculty">Đồ án tốt nghiệp - Hệ thống nông nghiệp thông minh</p>
+          <p className="home-faculty">
+            Đồ án tốt nghiệp - Hệ thống nông nghiệp thông minh
+          </p>
         </div>
       </div>
 
       <div className="home-section">
         <h3 className="section-title">Tên đề tài</h3>
         <p className="home-text">
-          Điều khiền và giám sát trọng lượng mẫu sấy trên mô hình sấy thí nghiệm.
-
+          Điều khiển và giám sát trọng lượng mẫu sấy trên mô hình sấy thí nghiệm.
         </p>
       </div>
 
@@ -32,10 +33,10 @@ export default function Home() {
             <strong>Mã số sinh viên:</strong> 22138038
           </div>
           <div className="info-item">
-            <strong>Lớp:DH22TD</strong> DH22TD
+            <strong>Lớp:</strong> DH22TD
           </div>
           <div className="info-item">
-            <strong>Ngành:Kỹ thuật điều khiển và tự động hóa</strong> Kỹ thuật điều khiển và tự động hóa
+            <strong>Ngành:</strong> Kỹ thuật điều khiển và tự động hóa
           </div>
         </div>
       </div>
@@ -51,10 +52,17 @@ export default function Home() {
         <h3 className="section-title">Phương thức liên lạc</h3>
         <div className="info-grid">
           <div className="info-item">
-            <strong>Gmail: </strong> nguyenduchuy23022004@gmail.com
+            <strong>Gmail:</strong> nguyenduchuy23022004@gmail.com
           </div>
           <div className="info-item">
-            <strong>Facebook:</strong> https://www.facebook.com/share/1G7wbduQN7/?mibextid=wwXIfr
+            <strong>Facebook:</strong>{" "}
+            <a
+              href="https://www.facebook.com/share/1G7wbduQN7/?mibextid=wwXIfr"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Trang Facebook cá nhân
+            </a>
           </div>
           <div className="info-item">
             <strong>Zalo:</strong> 0868489949
@@ -68,9 +76,10 @@ export default function Home() {
       <div className="home-section">
         <h3 className="section-title">Giới thiệu</h3>
         <p className="home-text">
-          Website này được xây dựng nhằm phục vụ việc giám sát và điều khiển tủ sấy nấm
-          theo thời gian thực. Hệ thống cho phép theo dõi nhiệt độ, khối lượng, trạng thái
-          hoạt động của thiết bị và điều chỉnh chế độ sấy trực tiếp từ giao diện web.
+          Website này được xây dựng nhằm phục vụ việc giám sát và điều khiển tủ
+          sấy nấm theo thời gian thực. Hệ thống cho phép theo dõi nhiệt độ,
+          khối lượng, trạng thái hoạt động của thiết bị và điều chỉnh chế độ
+          sấy trực tiếp từ giao diện web.
         </p>
       </div>
     </div>

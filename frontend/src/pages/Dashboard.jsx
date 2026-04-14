@@ -48,7 +48,7 @@ export default function Dashboard() {
       setLastUpdated(new Date().toLocaleString());
       setError("");
     } catch (err) {
-      console.error("Loi fetch dashboard:", err);
+      console.error("Lỗi fetch dashboard:", err);
       setError("Không lấy được dữ liệu từ server");
     } finally {
       setLoading(false);
@@ -93,7 +93,7 @@ export default function Dashboard() {
     const txtData = telemetry
       .map(
         (item) =>
-          `Thoi gian: ${new Date(item.created_at).toLocaleString()} | Nhiet do: ${item.temperature} | Khoi luong: ${item.weight} | Loai du lieu: ${item.source_action}`
+          `Thời gian: ${new Date(item.created_at).toLocaleString()} | Nhiệt độ: ${item.temperature} | Khối lượng: ${item.weight} | Loại dữ liệu: ${item.source_action}`
       )
       .join("\n");
 
@@ -157,13 +157,27 @@ export default function Dashboard() {
         </div>
 
         <div className="info-grid">
-          <div className="info-item"><strong>Chế độ:</strong> {deviceState?.mode}</div>
-          <div className="info-item"><strong>Chương trình:</strong> {deviceState?.program_state}</div>
-          <div className="info-item"><strong>Quạt:</strong> {deviceState?.fan}</div>
-          <div className="info-item"><strong>Điện trở:</strong> {deviceState?.heater}</div>
-          <div className="info-item"><strong>Nhiệt độ đặt:</strong> {deviceState?.heater_temp} °C</div>
-          <div className="info-item"><strong>Thời gian sấy:</strong> {deviceState?.dry_time} phút</div>
-          <div className="info-item"><strong>Trạng thái tủ:</strong> {deviceState?.cabinet_status}</div>
+          <div className="info-item">
+            <strong>Chế độ:</strong> {deviceState?.mode}
+          </div>
+          <div className="info-item">
+            <strong>Chương trình:</strong> {deviceState?.program_state}
+          </div>
+          <div className="info-item">
+            <strong>Quạt:</strong> {deviceState?.fan}
+          </div>
+          <div className="info-item">
+            <strong>Điện trở:</strong> {deviceState?.heater}
+          </div>
+          <div className="info-item">
+            <strong>Nhiệt độ đặt:</strong> {deviceState?.heater_temp} °C
+          </div>
+          <div className="info-item">
+            <strong>Thời gian sấy:</strong> {deviceState?.dry_time} phút
+          </div>
+          <div className="info-item">
+            <strong>Trạng thái tủ:</strong> {deviceState?.cabinet_status}
+          </div>
         </div>
       </div>
 
@@ -176,7 +190,7 @@ export default function Dashboard() {
 
         <h3 className="section-title">Đồ thị nhiệt độ</h3>
         <div className="chart-box">
-          <ResponsiveContainer>
+          <ResponsiveContainer width="100%" height="100%">
             <LineChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="time" />
@@ -190,7 +204,7 @@ export default function Dashboard() {
 
         <h3 className="section-title">Đồ thị khối lượng</h3>
         <div className="chart-box">
-          <ResponsiveContainer>
+          <ResponsiveContainer width="100%" height="100%">
             <LineChart data={chartData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="time" />
