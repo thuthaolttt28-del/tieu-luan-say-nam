@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const API = window.location.origin;
+const API = "https://tieu-luan-say-nam-api.onrender.com";
 
 export default function Control() {
   const [formData, setFormData] = useState({
