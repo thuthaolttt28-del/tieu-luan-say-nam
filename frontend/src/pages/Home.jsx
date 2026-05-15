@@ -34,7 +34,17 @@ export default function Home() {
       <h3 className="section-title">Phương thức liên lạc</h3>
       <div className="info-grid">
         <div className="info-item"><strong>Gmail:</strong> nguyenduchuy23022004@gmail.com</div>
-        <div className="info-item"><strong>Facebook:</strong> Trang Facebook cá nhân</div>
+        <div className="...">
+  <strong>Facebook:</strong> 
+  <a 
+    href="https://www.facebook.com/share/1G7wbduQN7/?mibextid=wwXIfr" 
+    target="_blank" 
+    rel="noopener noreferrer"
+    style={{ color: 'inherit', textDecoration: 'none' }} // Giữ nguyên màu chữ, không gạch chân
+  >
+    Trang Facebook cá nhân
+  </a>
+</div>
         <div className="info-item"><strong>Zalo:</strong> 0868489949</div>
         <div className="info-item"><strong>Số điện thoại:</strong> 0868489949</div>
       </div>
