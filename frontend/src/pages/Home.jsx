@@ -1,86 +1,42 @@
+import React from 'react';
+import nluLogo from '../assets/nlu-logo.png'; 
+
 export default function Home() {
   return (
-    <div className="card home-page">
-      <div className="home-header">
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/7/79/Nong_Lam_University_logo.png"
-          alt="Logo Trường Đại học Nông Lâm TP.HCM"
-          className="home-logo"
-        />
-
-        <div>
-          <h2 className="home-school">TRƯỜNG ĐẠI HỌC NÔNG LÂM TP.HCM</h2>
-          <p className="home-faculty">
-            Đồ án tốt nghiệp - Hệ thống nông nghiệp thông minh
-          </p>
+    <div className="card">
+      <div style={{ display: 'flex', alignItems: 'center', gap: '20px', marginBottom: '30px' }}>
+        <img src={nluLogo} alt="Logo NLU" className="home-logo" />
+        <div className="home-header-text">
+          <h2 className="home-school">TRƯỜNG ĐẠI HỌC NÔNG LÂM THÀNH PHỐ HỒ CHÍ MINH</h2>
+          <p style={{ margin: 0, color: '#666' }}>Đồ án tốt nghiệp - Hệ thống nông nghiệp thông minh</p>
         </div>
       </div>
 
-      <div className="home-section">
-        <h3 className="section-title">Tên đề tài</h3>
-        <p className="home-text">
-          Điều khiển và giám sát trọng lượng mẫu sấy trên mô hình sấy thí nghiệm.
-        </p>
+      {/* Phần Tên đề tài đã được căn giữa và viết hoa */}
+      <h3 className="section-title" style={{ textAlign: 'center', textTransform: 'uppercase' }}>
+        Tên đề tài
+      </h3>
+      <p style={{ textAlign: 'center', fontWeight: 'bold', textTransform: 'uppercase' }}>
+        Điều khiển và giám sát trọng lượng mẫu sấy trên mô hình sấy thí nghiệm.
+      </p>
+
+      <h3 className="section-title">Thông tin sinh viên</h3>
+      <div className="info-grid">
+        <div className="info-item"><strong>Họ và tên:</strong> Nguyễn Đức Huy</div>
+        <div className="info-item"><strong>Mã số sinh viên:</strong> 22138038</div>
+        <div className="info-item"><strong>Lớp:</strong> DH22TD</div>
+        <div className="info-item"><strong>Ngành:</strong> Kỹ thuật điều khiển và tự động hóa</div>
       </div>
 
-      <div className="home-section">
-        <h3 className="section-title">Thông tin sinh viên</h3>
-        <div className="info-grid">
-          <div className="info-item">
-            <strong>Họ và tên:</strong> Nguyễn Đức Huy
-          </div>
-          <div className="info-item">
-            <strong>Mã số sinh viên:</strong> 22138038
-          </div>
-          <div className="info-item">
-            <strong>Lớp:</strong> DH22TD
-          </div>
-          <div className="info-item">
-            <strong>Ngành:</strong> Kỹ thuật điều khiển và tự động hóa
-          </div>
-        </div>
-      </div>
+      <h3 className="section-title">Giảng viên hướng dẫn</h3>
+      <p style={{ textAlign: 'left', paddingLeft: '5px' }}>TS. Đào Duy Vinh</p>
 
-      <div className="home-section">
-        <h3 className="section-title">Giảng viên hướng dẫn</h3>
-        <p className="home-text">
-          <strong>TS. Đào Duy Vinh</strong>
-        </p>
-      </div>
-
-      <div className="home-section">
-        <h3 className="section-title">Phương thức liên lạc</h3>
-        <div className="info-grid">
-          <div className="info-item">
-            <strong>Gmail:</strong> nguyenduchuy23022004@gmail.com
-          </div>
-          <div className="info-item">
-            <strong>Facebook:</strong>{" "}
-            <a
-              href="https://www.facebook.com/share/1G7wbduQN7/?mibextid=wwXIfr"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Trang Facebook cá nhân
-            </a>
-          </div>
-          <div className="info-item">
-            <strong>Zalo:</strong> 0868489949
-          </div>
-          <div className="info-item">
-            <strong>Số điện thoại:</strong> 0868489949
-          </div>
-        </div>
-      </div>
-
-      <div className="home-section">
-        <h3 className="section-title">Giới thiệu</h3>
-        <p className="home-text">
-          Website này được xây dựng nhằm phục vụ việc giám sát và điều khiển tủ
-          sấy nấm theo thời gian thực. Hệ thống cho phép theo dõi nhiệt độ,
-          khối lượng, trạng thái hoạt động của thiết bị và điều chỉnh chế độ
-          sấy trực tiếp từ giao diện web.
-        </p>
+      <h3 className="section-title">Phương thức liên lạc</h3>
+      <div className="info-grid">
+        <div className="info-item"><strong>Gmail:</strong> nguyenduchuy23022004@gmail.com</div>
+        <div className="info-item"><strong>Facebook:</strong> Trang Facebook cá nhân</div>
+        <div className="info-item"><strong>Zalo:</strong> 0868489949</div>
+        <div className="info-item"><strong>Số điện thoại:</strong> 0868489949</div>
       </div>
     </div>
   );

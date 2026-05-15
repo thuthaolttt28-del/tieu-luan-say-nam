@@ -13,7 +13,7 @@ import {
 import * as XLSX from "xlsx";
 import { saveAs } from "file-saver";
 
-const API = window.location.origin;
+const API = "https://tieu-luan-say-nam-api.onrender.com";
 
 export default function Dashboard() {
   const [deviceState, setDeviceState] = useState(null);

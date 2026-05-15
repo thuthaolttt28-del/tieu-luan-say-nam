@@ -208,7 +208,7 @@ app.put("/api/control", async (req, res) => {
     const program_state = String(req.body.program_state || "off");
     const fan = String(req.body.fan || "off");
     const heater = String(req.body.heater || "off");
-    const heater_temp = Number(req.body.heater_temp || 45);
+    const heater_temp = Number(req.body.heater_temp || 60);
     const dry_time = Number(req.body.dry_time || 0);
     const cabinet_status = String(req.body.cabinet_status || "TAT");
 
