@@ -14,7 +14,7 @@ export default function App() {
 
     <div className="container">
 
-      <h1 className="title">HỆ THỐNG GIÁM SÁT VÀ ĐIỀU KHIỂN TỦ SẤY NẤM</h1>
+      <h1 className="title">MÔ HÌNH GIÁM SÁT VÀ ĐIỀU KHIỂN TỦ SẤY NẤM</h1>
 
       <p className="subtitle">
 
